@@ -55,7 +55,7 @@ void enqueue(){
 
 }
 
-void sequeue(){
+void findAll(){
     auxiliar = firstPointer;
     if(auxiliar == NULL){
         printf("\n There is no user registered.");
@@ -68,14 +68,37 @@ void sequeue(){
     }
 }
 
+void sequeue(int id){
+    auxiliar = firstPointer;
+    int notFound = 0;
+    if(auxiliar == NULL){
+        printf("\n There is no user registered.");
+        notFound = 1;
+    }else {
+        int position = 0;
+        while(auxiliar != NULL){
+            position++;
+            if(auxiliar->id == id){
+                printf("\n User searched at position %d", position);
+                notFound = 1;
+                break;
+            }
+            auxiliar = auxiliar->next;
+        }
+    }
+    if(notFound == 0){
+        printf("\n ID: %d not found.", id);
+    }
+}
+
 void dequeue(){
-    queueSize--;
     auxiliar = firstPointer;
     if(auxiliar == NULL){
         printf("\n There is no user registered.");
     }else {
         firstPointer = auxiliar->next;
         free(auxiliar);
+        queueSize--;
     }
 }
 
@@ -95,6 +118,7 @@ int main(){
         printf("\n 1: Insert new user");
         printf("\n 2: Show users");
         printf("\n 3: Remove user");
+        printf("\n 4: Search user queue position");
         printf("\n");
         scanf("%d", &option);
 
@@ -107,10 +131,16 @@ int main(){
                 enqueue();
                 break;
             case 2: system("cls");
-                sequeue();
+                findAll();
                 break;
             case 3: system("cls");
                 dequeue();
+                break;
+            case 4: system("cls");
+                int pos;
+                printf("\n Inform user ID: ");
+                scanf("%d", &pos);
+                sequeue(pos);
                 break;
             default:
                 printf("\n Invalid option");
